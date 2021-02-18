@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7eb80ba-5a7b-4992-8c6e-8999c62bec95" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoilGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoilGUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +77,8 @@
       <workItem from="1613401377430" duration="1294000" />
       <workItem from="1613589291280" duration="3162000" />
       <workItem from="1613597313226" duration="1042000" />
-      <workItem from="1613602009657" duration="1344000" />
+      <workItem from="1613602009657" duration="1757000" />
+      <workItem from="1613666598107" duration="6083000" />
     </task>
     <servers />
   </component>
@@ -87,12 +90,17 @@
       <screen x="0" y="23" width="1680" height="967" />
     </state>
     <state x="298" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589420891" />
-    <state x="517" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1613602010863">
-      <screen x="0" y="23" width="1680" height="973" />
+    <state x="496" y="316" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1613668817041">
+      <screen x="0" y="23" width="1680" height="972" />
+    </state>
+    <state x="496" y="316" key="#com.intellij.fileTypes.FileTypeChooser/1680.110.1440.877/0.23.1680.972/-1600.109.1600.877@0.23.1680.972" timestamp="1613668817041" />
+    <state x="517" y="337" key="com.intellij.ide.util.TipDialog" timestamp="1613666600195">
+      <screen x="0" y="23" width="1680" height="967" />
     </state>
     <state x="517" y="335" key="com.intellij.ide.util.TipDialog/0.23.1680.961/-1600.-36.1600.877@0.23.1680.961" timestamp="1613333077958" />
     <state x="517" y="337" key="com.intellij.ide.util.TipDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589291516" />
     <state x="517" y="339" key="com.intellij.ide.util.TipDialog/0.23.1680.973@0.23.1680.973" timestamp="1613602010863" />
+    <state x="517" y="337" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.967/-1600.109.1600.877@0.23.1680.967" timestamp="1613666600195" />
     <state x="-1108" y="394" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.973/-1600.109.1600.877@-1600.109.1600.877" timestamp="1613597374250" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">

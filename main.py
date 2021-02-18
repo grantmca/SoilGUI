@@ -10,7 +10,7 @@ from SoilGUI import Ui_MainWindow
 
 import time
 # import RPi.GPIO as GPIO
-from PCA9685 import PCA9685
+# from PCA9685 import PCA9685
 
 import sys
 
@@ -57,7 +57,6 @@ class Deployment:
         return True
 
 
-    # def update_filters(self, )
 
     def process_frame(self):
         start_time = time.time()
@@ -92,7 +91,9 @@ class App(QMainWindow):
         self.exposure = None
         self.blank_image = np.zeros((20, 20, 3), np.uint8)
         self.deployment = None
-        self.ui.Start.clicked.connect(self.start_camera)
+        # fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        # self.out = cv2.VideoWriter('vid-%s.avi' % time.strftime("%Y-%m-%d-%H-%M-%S"), fourcc, 20.0, (640, 480))
+        self.ui.Start.clicked.connect(self.start_record)
         self.ui.Stop.clicked.connect(self.stop_camera)
         self.ui.Up.clicked.connect(self.tilt_up)
         self.ui.Down.clicked.connect(self.tilt_down)
@@ -100,7 +101,7 @@ class App(QMainWindow):
         self.ui.Right.clicked.connect(self.tilt_right)
         self.ui.positive.clicked.connect(self.savePositive)
         self.ui.negative.clicked.connect(self.saveNegative)
-
+        self.start_camera()
     # def __del__(self):
 
         # if self.deployment.video.cap.isOpened():
@@ -136,14 +137,31 @@ class App(QMainWindow):
         self.timer.timeout.connect(self.update)
         self.timer.start()
 
-    def stop_camera(self):
-        self.timer.stop()
-        # self.__del__()
-        QtTest.QTest.qWait(100)
-        if self.deployment is not None:
-            self.deployment.video.cap.release()
-            self.deployment = None
+    def start_record(self):
+        print('Started Recording')
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        self.out = cv2.VideoWriter('vid-%s.avi' % time.strftime("%Y-%m-%d-%H-%M-%S"), fourcc, 20.0, (640, 480))
+        self.timer.timeout.connect(self.record)
 
+
+    def stop_camera(self):
+        # self.timer.stop()
+        # self.__del__()
+        try:
+            self.timer.timeout.disconnect(self.record)
+        except Exception:
+            pass
+        QtTest.QTest.qWait(100)
+
+        if self.deployment is not None:
+            # self.deployment.video.cap.release()
+            self.out.release()
+            # self.deployment = None
+            self.out = None
+        print("Recording Stopped")
+    def record(self):
+        frame = self.deployment.process_frame()
+        self.out.write(frame[0])
 
     def update(self):
         frame = self.deployment.process_frame()
