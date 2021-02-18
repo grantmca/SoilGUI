@@ -10,7 +10,7 @@ from SoilGUI import Ui_MainWindow
 
 import time
 # import RPi.GPIO as GPIO
-# from PCA9685 import PCA9685
+from PCA9685 import PCA9685
 
 import sys
 
