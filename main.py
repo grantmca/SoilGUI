@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import tensorflow.keras as keras
+# import tensorflow.keras as keras
 import librosa
 import math
 import pyaudio
@@ -78,7 +78,7 @@ def Audio_Class():
     # ensuring that there is only 1 instance of Audio_Class
     if _Audio_Class._instance is None:
         _Audio_Class._instance = _Audio_Class()
-        _Audio_Class.model = keras.models.load_model(MODEL_DATA_PATH)
+        # _Audio_Class.model = keras.models.load_model(MODEL_DATA_PATH)
 
     return _Audio_Class._instance
 
