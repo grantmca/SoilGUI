@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 # import tensorflow.keras as keras
-import librosa
+# import librosa
 import math
 import pyaudio
 import wave
@@ -24,63 +24,63 @@ import sys
 MODEL_DATA_PATH = "model.h5" #loading the CNN model from tensor flow
 NUM_OF_SAMPLRS_FOR_MODEL_INPUT = 22050*30 # number of samples for 1 seconds. if longer is need multiple by the amount of seconds
 
-class  _Audio_Class:
-
-    #creates a model object and a mapping for the classifications
-    model = None
-    _mapping = [  "birds",
-        "cars",
-        "crickets",
-        "footsteps",
-        "motor",
-        "rain",
-        "talking",
-        "wind"
-
-    ]
-    _instance = None
-
-    def predict(self,MFCC):
-        #extact mfcc
-        #MFCC = self.preprocess(file_path) # hape of array is (# of segments, # coefficents)
-
-        #convert the 2d mfcc array to an 4d array
-        MFCC = MFCC[np.newaxis, ... ,np.newaxis]                            #      (# of samples for prediction, # of segments, # coefficents, # channels )
-
-        #make prediction
-        prediction = self.model.predict(MFCC) # out is a 2d array which contain as the class for classification
-
-        '''  # This array contains the probability that this input is one of the classification
-        for i in range(9):
-            print("{}:{}".format(self._mapping[i],prediction[0][i]))
-        '''
-        prediction_index = np.argmax(prediction) # this gets the higest value of probability in the output array of the model_selection
-
-        predicted_keyword = self._mapping[prediction_index] # determing the key word for predictions in mappings
-
-        return predicted_keyword, prediction.flatten()
-
-    def preprocess(self, file_path, n_mfcc = 13, n_fft = 2048, hop_length = 512):
-
-        #load audio files
-        signal, sr = librosa.load(file_path)
-
-        #ensure consistency of files length
-        if len(signal) > NUM_OF_SAMPLRS_FOR_MODEL_INPUT:
-            signal = signal[:NUM_OF_SAMPLRS_FOR_MODEL_INPUT]
-
-        #extract MFCC
-        MFCC = librosa.feature.mfcc(signal, n_mfcc = n_mfcc, n_fft = n_fft, hop_length = hop_length)
-
-        return MFCC.T
-
-def Audio_Class():
-    # ensuring that there is only 1 instance of Audio_Class
-    if _Audio_Class._instance is None:
-        _Audio_Class._instance = _Audio_Class()
-        # _Audio_Class.model = keras.models.load_model(MODEL_DATA_PATH)
-
-    return _Audio_Class._instance
+# class  _Audio_Class:
+#
+#     #creates a model object and a mapping for the classifications
+#     model = None
+#     _mapping = [  "birds",
+#         "cars",
+#         "crickets",
+#         "footsteps",
+#         "motor",
+#         "rain",
+#         "talking",
+#         "wind"
+#
+#     ]
+#     _instance = None
+#
+#     def predict(self,MFCC):
+#         #extact mfcc
+#         #MFCC = self.preprocess(file_path) # hape of array is (# of segments, # coefficents)
+#
+#         #convert the 2d mfcc array to an 4d array
+#         MFCC = MFCC[np.newaxis, ... ,np.newaxis]                            #      (# of samples for prediction, # of segments, # coefficents, # channels )
+#
+#         #make prediction
+#         prediction = self.model.predict(MFCC) # out is a 2d array which contain as the class for classification
+#
+#         '''  # This array contains the probability that this input is one of the classification
+#         for i in range(9):
+#             print("{}:{}".format(self._mapping[i],prediction[0][i]))
+#         '''
+#         prediction_index = np.argmax(prediction) # this gets the higest value of probability in the output array of the model_selection
+#
+#         predicted_keyword = self._mapping[prediction_index] # determing the key word for predictions in mappings
+#
+#         return predicted_keyword, prediction.flatten()
+#
+#     def preprocess(self, file_path, n_mfcc = 13, n_fft = 2048, hop_length = 512):
+#
+#         #load audio files
+#         # signal, sr = librosa.load(file_path)
+#
+#         #ensure consistency of files length
+#         if len(signal) > NUM_OF_SAMPLRS_FOR_MODEL_INPUT:
+#             signal = signal[:NUM_OF_SAMPLRS_FOR_MODEL_INPUT]
+#
+#         #extract MFCC
+#         # MFCC = librosa.feature.mfcc(signal, n_mfcc = n_mfcc, n_fft = n_fft, hop_length = hop_length)
+#
+#         # return MFCC.T
+#
+# def Audio_Class():
+#     # ensuring that there is only 1 instance of Audio_Class
+#     if _Audio_Class._instance is None:
+#         _Audio_Class._instance = _Audio_Class()
+#         # _Audio_Class.model = keras.models.load_model(MODEL_DATA_PATH)
+#
+#     return _Audio_Class._instance
 
 class VideoCapture:
 
