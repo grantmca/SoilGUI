@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7eb80ba-5a7b-4992-8c6e-8999c62bec95" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,6 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="3a1be839-a3ae-4cd1-9708-4aae129ae057" />
   <component name="ProjectId" id="1oUF2ekXJkuvEe0sCXUNdtIOGmV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -27,6 +29,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -34,6 +37,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/positive" />
     </key>
   </component>
   <component name="RunManager">
@@ -77,6 +84,11 @@
       <workItem from="1613597313226" duration="1042000" />
       <workItem from="1613602009657" duration="1757000" />
       <workItem from="1613666598107" duration="6701000" />
+      <workItem from="1613708378754" duration="578000" />
+      <workItem from="1613764643350" duration="1858000" />
+      <workItem from="1614032616436" duration="619000" />
+      <workItem from="1614725911849" duration="1166000" />
+      <workItem from="1614784935177" duration="17265000" />
     </task>
     <servers />
   </component>
@@ -88,18 +100,23 @@
       <screen x="0" y="23" width="1680" height="967" />
     </state>
     <state x="298" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589420891" />
-    <state x="496" y="316" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1613668817041">
-      <screen x="0" y="23" width="1680" height="972" />
+    <state x="496" y="314" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1614824100369">
+      <screen x="0" y="23" width="1680" height="965" />
     </state>
+    <state x="496" y="314" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.965@0.23.1680.965" timestamp="1614824100369" />
     <state x="496" y="316" key="#com.intellij.fileTypes.FileTypeChooser/1680.110.1440.877/0.23.1680.972/-1600.109.1600.877@0.23.1680.972" timestamp="1613668817041" />
-    <state x="517" y="337" key="com.intellij.ide.util.TipDialog" timestamp="1613666600195">
-      <screen x="0" y="23" width="1680" height="967" />
+    <state x="2123" y="395" key="com.intellij.ide.util.TipDialog" timestamp="1614784935759">
+      <screen x="1680" y="110" width="1440" height="877" />
     </state>
     <state x="517" y="335" key="com.intellij.ide.util.TipDialog/0.23.1680.961/-1600.-36.1600.877@0.23.1680.961" timestamp="1613333077958" />
+    <state x="517" y="336" key="com.intellij.ide.util.TipDialog/0.23.1680.963@0.23.1680.963" timestamp="1614032616331" />
     <state x="517" y="337" key="com.intellij.ide.util.TipDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589291516" />
     <state x="517" y="339" key="com.intellij.ide.util.TipDialog/0.23.1680.973@0.23.1680.973" timestamp="1613602010863" />
+    <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.961/-1600.109.1600.877@1680.110.1440.877" timestamp="1614784935759" />
+    <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.965/-1600.109.1600.877@1680.110.1440.877" timestamp="1613764643467" />
     <state x="517" y="337" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.967/-1600.109.1600.877@0.23.1680.967" timestamp="1613666600195" />
     <state x="-1108" y="394" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.973/-1600.109.1600.877@-1600.109.1600.877" timestamp="1613597374250" />
+    <state x="517" y="340" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.974/-1600.109.1600.877@1680.110.1440.877" timestamp="1614725914751" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SoilGUI$main.coverage" NAME="main Coverage Results" MODIFIED="1613589423270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
