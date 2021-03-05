@@ -8,7 +8,7 @@ import wave
 import struct
 import matplotlib.pyplot as plt
 import pyqtgraph as pg
-import PyQt5
+# import PyQt5
 from PyQt5 import QtGui, QtWidgets, QtTest
 from PyQt5.QtGui import QImage
 from PyQt5.QtCore import QTimer, QDateTime, QTime

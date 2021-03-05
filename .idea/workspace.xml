@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e7eb80ba-5a7b-4992-8c6e-8999c62bec95" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoilGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoilGUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +91,7 @@
       <workItem from="1614784935177" duration="18385000" />
       <workItem from="1614877158852" duration="3342000" />
       <workItem from="1614895127674" duration="4117000" />
-      <workItem from="1614921784123" duration="7443000" />
+      <workItem from="1614921784123" duration="8196000" />
     </task>
     <servers />
   </component>
