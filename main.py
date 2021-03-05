@@ -7,7 +7,7 @@ import pyaudio
 import wave
 import struct
 import matplotlib.pyplot as plt
-
+import pyqtgraph as pg
 import PyQt5
 from PyQt5 import QtGui, QtWidgets, QtTest
 from PyQt5.QtGui import QImage
@@ -135,7 +135,7 @@ class AudioCapture:
         hold = None
 
     def get_audio(self):
-        return self.stream.read(self.chunk, False)
+        return self.stream.read(num_frames=self.chunk, exception_on_overflow=False)
 
     def save_audio(self):
         self.stream.stop_stream()
@@ -177,6 +177,7 @@ class Deployment:
     def record_audio(self):
         data = self.audio.get_audio()
         self.audio.frames.append(data)
+        return data
 
 
 class App(QMainWindow):
@@ -187,7 +188,7 @@ class App(QMainWindow):
         self.timer = QTimer(self)
         self.audio_timer = QTimer(self)
         self.video_source = 0
-        # self.pwn = PCA9685()
+        # self.pwm = PCA9685()
         self.rot_x = 0
         self.rot_y = 0
         # self.pwm.setPWMFreq(50)
@@ -210,6 +211,19 @@ class App(QMainWindow):
         self.ui.positive.clicked.connect(self.savePositive)
         self.ui.negative.clicked.connect(self.saveNegative)
         self.start_camera()
+
+
+    def get_data_update_plot(self):
+        # reads audio input from microphone
+        data = self.deployment.audio.get_audio()
+        graph_data = np.frombuffer(data, dtype=np.int16)
+        self.data_line.setData(self.chunk_range, graph_data)
+
+    def get_frame_update_plot(self):
+        # reads audio input from microphone
+        data = self.deployment.audio.frames[-1]
+        graph_data = np.frombuffer(data, dtype=np.int16)
+        self.data_line.setData(self.chunk_range, graph_data)
 
     def tilt_up(self):
         self.rot_y = self.rot_y - 2
@@ -244,20 +258,31 @@ class App(QMainWindow):
                                                         focus=self.focus,
                                                         exposure=self.exposure, auto_exposure=self.auto_exposure))
         self.timer.setInterval(10)
+        self.chunk_range = np.arange(0, self.deployment.audio.chunk)
+        self.data_line = self.ui.graph.plot(self.chunk_range, )
         self.timer.timeout.connect(self.update)
         self.timer.start()
+        interval = 1000 * (1 / self.deployment.audio.rate)
+        self.audio_timer.setInterval(interval)
+        data = self.deployment.audio.get_audio()
+        graph_data = np.frombuffer(data, dtype=np.int16)
+        self.data_line = self.ui.graph.plot(self.chunk_range, graph_data)
+        # self.ui.graph.clear()
+        self.audio_timer.timeout.connect(self.get_data_update_plot)
         self.audio_timer.start()
+
+
 
     def start_record(self):
         print('Started Recording')
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.deployment.out = cv2.VideoWriter('vid-%s.avi' % time.strftime("%Y-%m-%d-%H-%M-%S"), fourcc, 20.0, (640, 480))
         self.timer.timeout.connect(self.deployment.record_video)
-        interval = 1000*(1/self.deployment.audio.rate)
-        self.audio_timer.setInterval(interval)
-        print("Cal Interval" + str(interval))
-        print("Actual Interval" + str(self.audio_timer.interval()))
+        self.audio_timer.timeout.disconnect(self.get_data_update_plot)
         self.audio_timer.timeout.connect(self.deployment.record_audio)
+        self.audio_timer.timeout.connect(self.get_frame_update_plot)
+
+
     def stop_camera(self):
 
         self.deployment.audio.save_audio()

@@ -7,15 +7,17 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pyqtgraph import PlotWidget, plot
+import pyqtgraph as pg
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1016, 626)
+        MainWindow.resize(947, 620)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(29, 29, 921, 531))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 20, 881, 411))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -27,6 +29,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.Frame)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
+        self.Up = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.Up.setMinimumSize(QtCore.QSize(113, 32))
+        self.Up.setObjectName("Up")
+        self.gridLayout.addWidget(self.Up, 0, 1, 1, 1)
+        self.positive = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.positive.setObjectName("positive")
+        self.gridLayout.addWidget(self.positive, 4, 0, 1, 1)
         self.Right = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.Right.setObjectName("Right")
         self.gridLayout.addWidget(self.Right, 1, 2, 1, 1)
@@ -42,17 +51,15 @@ class Ui_MainWindow(object):
         self.negative = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.negative.setObjectName("negative")
         self.gridLayout.addWidget(self.negative, 4, 2, 1, 1)
-        self.positive = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.positive.setObjectName("positive")
-        self.gridLayout.addWidget(self.positive, 4, 0, 1, 1)
-        self.Up = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.Up.setMinimumSize(QtCore.QSize(113, 32))
-        self.Up.setObjectName("Up")
-        self.gridLayout.addWidget(self.Up, 0, 1, 1, 1)
         self.Down = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.Down.setObjectName("Down")
         self.gridLayout.addWidget(self.Down, 2, 1, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
+        self.graph = pg.PlotWidget(self.centralwidget)
+        self.graph.setGeometry(QtCore.QRect(30, 460, 881, 81))
+        self.graph.setObjectName("graph")
+        self.graph.setXRange(0, 1050)
+        self.graph.setYRange(-3300, 3300)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -64,12 +71,22 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.Up.setText(_translate("MainWindow", "Up"))
+        self.positive.setText(_translate("MainWindow", "Positive"))
         self.Right.setText(_translate("MainWindow", "Right"))
         self.Stop.setText(_translate("MainWindow", "Stop"))
         self.Left.setText(_translate("MainWindow", "Left"))
         self.Start.setText(_translate("MainWindow", "Start"))
         self.negative.setText(_translate("MainWindow", "Negative"))
-        self.positive.setText(_translate("MainWindow", "Positive"))
-        self.Up.setText(_translate("MainWindow", "Up"))
         self.Down.setText(_translate("MainWindow", "Down"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
 

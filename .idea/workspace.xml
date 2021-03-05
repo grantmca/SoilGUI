@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7eb80ba-5a7b-4992-8c6e-8999c62bec95" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoilGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoilGUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +89,10 @@
       <workItem from="1613764643350" duration="1858000" />
       <workItem from="1614032616436" duration="619000" />
       <workItem from="1614725911849" duration="1166000" />
-      <workItem from="1614784935177" duration="18068000" />
+      <workItem from="1614784935177" duration="18385000" />
+      <workItem from="1614877158852" duration="3342000" />
+      <workItem from="1614895127674" duration="4117000" />
+      <workItem from="1614921784123" duration="7443000" />
     </task>
     <servers />
   </component>
@@ -100,19 +104,27 @@
       <screen x="0" y="23" width="1680" height="967" />
     </state>
     <state x="298" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589420891" />
-    <state x="496" y="314" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1614824100369">
-      <screen x="0" y="23" width="1680" height="965" />
+    <state x="-1353" y="342" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1614925168349">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
+    <state x="-1353" y="342" key="#com.intellij.fileTypes.FileTypeChooser/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.972@-1920.23.1920.1057" timestamp="1614925168349" />
     <state x="496" y="314" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.965@0.23.1680.965" timestamp="1614824100369" />
     <state x="496" y="316" key="#com.intellij.fileTypes.FileTypeChooser/1680.110.1440.877/0.23.1680.972/-1600.109.1600.877@0.23.1680.972" timestamp="1613668817041" />
-    <state x="2123" y="395" key="com.intellij.ide.util.TipDialog" timestamp="1614784935759">
-      <screen x="1680" y="110" width="1440" height="877" />
+    <state x="-1222" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1614896686660">
+      <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
+    <state x="-1222" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.972@-1920.23.1920.1057" timestamp="1614896686660" />
+    <state x="-1329" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1614921788721">
+      <screen x="-1920" y="23" width="1920" height="1057" />
+    </state>
+    <state x="517" y="339" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.972@0.23.1680.972" timestamp="1614895127707" />
+    <state x="-1329" y="367" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.973@-1920.23.1920.1057" timestamp="1614921788721" />
     <state x="517" y="335" key="com.intellij.ide.util.TipDialog/0.23.1680.961/-1600.-36.1600.877@0.23.1680.961" timestamp="1613333077958" />
     <state x="517" y="336" key="com.intellij.ide.util.TipDialog/0.23.1680.963@0.23.1680.963" timestamp="1614032616331" />
     <state x="517" y="337" key="com.intellij.ide.util.TipDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589291516" />
     <state x="517" y="339" key="com.intellij.ide.util.TipDialog/0.23.1680.973@0.23.1680.973" timestamp="1613602010863" />
     <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.961/-1600.109.1600.877@1680.110.1440.877" timestamp="1614784935759" />
+    <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.963/-1600.109.1600.877@1680.110.1440.877" timestamp="1614877158462" />
     <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.965/-1600.109.1600.877@1680.110.1440.877" timestamp="1613764643467" />
     <state x="517" y="337" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.967/-1600.109.1600.877@0.23.1680.967" timestamp="1613666600195" />
     <state x="-1108" y="394" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.973/-1600.109.1600.877@-1600.109.1600.877" timestamp="1613597374250" />
