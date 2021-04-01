@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7eb80ba-5a7b-4992-8c6e-8999c62bec95" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SoilGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/SoilGUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +92,13 @@
       <workItem from="1614784935177" duration="18385000" />
       <workItem from="1614877158852" duration="3342000" />
       <workItem from="1614895127674" duration="4117000" />
-      <workItem from="1614921784123" duration="8196000" />
+      <workItem from="1614921784123" duration="8643000" />
+      <workItem from="1616001333431" duration="247000" />
+      <workItem from="1616184687483" duration="1759000" />
+      <workItem from="1616729419701" duration="1961000" />
+      <workItem from="1617069367304" duration="371000" />
+      <workItem from="1617134193561" duration="888000" />
+      <workItem from="1617220999722" duration="3756000" />
     </task>
     <servers />
   </component>
@@ -113,14 +120,16 @@
       <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
     <state x="-1222" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.972@-1920.23.1920.1057" timestamp="1614896686660" />
-    <state x="-1329" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1614921788721">
-      <screen x="-1920" y="23" width="1920" height="1057" />
+    <state x="517" y="337" key="com.intellij.ide.util.TipDialog" timestamp="1617221000108">
+      <screen x="0" y="23" width="1680" height="967" />
     </state>
+    <state x="517" y="337" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.965@0.23.1680.965" timestamp="1616729420105" />
     <state x="517" y="339" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.972@0.23.1680.972" timestamp="1614895127707" />
     <state x="-1329" y="367" key="com.intellij.ide.util.TipDialog/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.973@-1920.23.1920.1057" timestamp="1614921788721" />
     <state x="517" y="335" key="com.intellij.ide.util.TipDialog/0.23.1680.961/-1600.-36.1600.877@0.23.1680.961" timestamp="1613333077958" />
     <state x="517" y="336" key="com.intellij.ide.util.TipDialog/0.23.1680.963@0.23.1680.963" timestamp="1614032616331" />
-    <state x="517" y="337" key="com.intellij.ide.util.TipDialog/0.23.1680.967@0.23.1680.967" timestamp="1613589291516" />
+    <state x="517" y="337" key="com.intellij.ide.util.TipDialog/0.23.1680.966@0.23.1680.966" timestamp="1617134193588" />
+    <state x="517" y="337" key="com.intellij.ide.util.TipDialog/0.23.1680.967@0.23.1680.967" timestamp="1617221000108" />
     <state x="517" y="339" key="com.intellij.ide.util.TipDialog/0.23.1680.973@0.23.1680.973" timestamp="1613602010863" />
     <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.961/-1600.109.1600.877@1680.110.1440.877" timestamp="1614784935759" />
     <state x="2123" y="395" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.963/-1600.109.1600.877@1680.110.1440.877" timestamp="1614877158462" />
@@ -128,6 +137,10 @@
     <state x="517" y="337" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.967/-1600.109.1600.877@0.23.1680.967" timestamp="1613666600195" />
     <state x="-1108" y="394" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.973/-1600.109.1600.877@-1600.109.1600.877" timestamp="1613597374250" />
     <state x="517" y="340" key="com.intellij.ide.util.TipDialog/1680.110.1440.877/0.23.1680.974/-1600.109.1600.877@1680.110.1440.877" timestamp="1614725914751" />
+    <state x="24" y="23" width="1656" height="874" maximized="true" key="dock-window-1" timestamp="1617248196130">
+      <screen x="0" y="23" width="1680" height="973" />
+    </state>
+    <state x="24" y="23" width="1656" height="874" maximized="true" key="dock-window-1/-1920.23.1920.1057/1680.121.1440.877/0.23.1680.973@-1920.23.1920.1057" timestamp="1617248196130" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SoilGUI$main.coverage" NAME="main Coverage Results" MODIFIED="1613589423270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

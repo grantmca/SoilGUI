@@ -54,12 +54,34 @@ class Ui_MainWindow(object):
         self.Down = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.Down.setObjectName("Down")
         self.gridLayout.addWidget(self.Down, 2, 1, 1, 1)
+        self.anotation = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.anotation.setObjectName("anotation")
+        self.gridLayout.addWidget(self.anotation, 4, 1, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
-        self.graph = pg.PlotWidget(self.centralwidget)
-        self.graph.setGeometry(QtCore.QRect(30, 460, 881, 81))
-        self.graph.setObjectName("graph")
-        self.graph.setXRange(0, 1050)
-        self.graph.setYRange(-3300, 3300)
+        self.rlabel = QtWidgets.QLabel(self.centralwidget)
+        self.rlabel.setGeometry(QtCore.QRect(30, 460, 881, 16))
+        self.rlabel.setText("Right: ")
+        self.rlabel.setObjectName("rlabel")
+
+
+        self.rgraph = pg.PlotWidget(self.centralwidget)
+        self.rgraph.setGeometry(QtCore.QRect(30, 460, 881, 81))
+        self.rgraph.setObjectName("rgraph")
+        self.rgraph.setXRange(0, 1050)
+        self.rgraph.setYRange(-2200000000, 2200000000)
+
+
+        self.llabel = QtWidgets.QLabel(self.centralwidget)
+        self.llabel.setGeometry(QtCore.QRect(30, 570, 881, 16))
+        self.llabel.setText("Left: ")
+        self.llabel.setObjectName("llabel")
+
+        self.lgraph = pg.PlotWidget(self.centralwidget)
+        self.lgraph.setGeometry(QtCore.QRect(30, 600, 881, 71))
+        self.lgraph.setObjectName("lgraph")
+        self.lgraph.setXRange(0, 1050)
+        self.lgraph.setYRange(-2200000000, 2200000000)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -79,6 +101,7 @@ class Ui_MainWindow(object):
         self.Start.setText(_translate("MainWindow", "Start"))
         self.negative.setText(_translate("MainWindow", "Negative"))
         self.Down.setText(_translate("MainWindow", "Down"))
+        self.anotation.setText(_translate("MainWindow", "Toggle Anotation"))
 
 
 if __name__ == "__main__":

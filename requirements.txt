@@ -1,0 +1,7 @@
+setuptools
+wheel
+opencv-python==4.5.1.48
+numpy==1.20.1
+PyAudio==0.2.11
+pyqtgraph
+PyQt5

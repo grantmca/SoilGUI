@@ -1,5 +1,9 @@
 import cv2
 import numpy as np
+from csv import writer
+import noisereduce as nr
+import threading
+import struct
 # import tensorflow.keras as keras
 # import librosa
 import math
@@ -15,82 +19,47 @@ from PyQt5.QtCore import QTimer, QDateTime, QTime
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow
 import time
 from SoilGUI import Ui_MainWindow
-
+from datetime import datetime
 import time
-# import RPi.GPIO as GPIO
-# from PCA9685 import PCA9685
+import RPi.GPIO as GPIO
+from PCA9685 import PCA9685
 import sys
 
-MODEL_DATA_PATH = "model.h5" #loading the CNN model from tensor flow
-NUM_OF_SAMPLRS_FOR_MODEL_INPUT = 22050*30 # number of samples for 1 seconds. if longer is need multiple by the amount of seconds
 
-# class  _Audio_Class:
-#
-#     #creates a model object and a mapping for the classifications
-#     model = None
-#     _mapping = [  "birds",
-#         "cars",
-#         "crickets",
-#         "footsteps",
-#         "motor",
-#         "rain",
-#         "talking",
-#         "wind"
-#
-#     ]
-#     _instance = None
-#
-#     def predict(self,MFCC):
-#         #extact mfcc
-#         #MFCC = self.preprocess(file_path) # hape of array is (# of segments, # coefficents)
-#
-#         #convert the 2d mfcc array to an 4d array
-#         MFCC = MFCC[np.newaxis, ... ,np.newaxis]                            #      (# of samples for prediction, # of segments, # coefficents, # channels )
-#
-#         #make prediction
-#         prediction = self.model.predict(MFCC) # out is a 2d array which contain as the class for classification
-#
-#         '''  # This array contains the probability that this input is one of the classification
-#         for i in range(9):
-#             print("{}:{}".format(self._mapping[i],prediction[0][i]))
-#         '''
-#         prediction_index = np.argmax(prediction) # this gets the higest value of probability in the output array of the model_selection
-#
-#         predicted_keyword = self._mapping[prediction_index] # determing the key word for predictions in mappings
-#
-#         return predicted_keyword, prediction.flatten()
-#
-#     def preprocess(self, file_path, n_mfcc = 13, n_fft = 2048, hop_length = 512):
-#
-#         #load audio files
-#         # signal, sr = librosa.load(file_path)
-#
-#         #ensure consistency of files length
-#         if len(signal) > NUM_OF_SAMPLRS_FOR_MODEL_INPUT:
-#             signal = signal[:NUM_OF_SAMPLRS_FOR_MODEL_INPUT]
-#
-#         #extract MFCC
-#         # MFCC = librosa.feature.mfcc(signal, n_mfcc = n_mfcc, n_fft = n_fft, hop_length = hop_length)
-#
-#         # return MFCC.T
-#
-# def Audio_Class():
-#     # ensuring that there is only 1 instance of Audio_Class
-#     if _Audio_Class._instance is None:
-#         _Audio_Class._instance = _Audio_Class()
-#         # _Audio_Class.model = keras.models.load_model(MODEL_DATA_PATH)
-#
-#     return _Audio_Class._instance
+def process_audio(audio):
+        # print(type(audio))
+        # decode = np.frombuffer(audio, np.uint32)
+        left = audio[0::2]
+        right = audio[1::2]
+        # l = left.astype(float)
+        # r = right.astype(float)
+        #left_samples = np.nan_to_num(left_samples, posinf = 3.4e+38, neginf =-3.4e+38)
+        #right_samples = np.nan_to_num(right_samples, posinf = 3.4e+38, neginf =-3.4e+38)
+        # caudio = l
+        # caudio = caudio.astype(np.int32)
+        # caudio = caudio.tobytes()
+        return left, right
 
 class VideoCapture:
 
     def __init__(self, video_source=0, width=None, height=None, auto_focus=None,
                  focus=None, exposure=None, auto_exposure=None):
         self.cap = cv2.VideoCapture(video_source)
+        self.lock = threading.Lock()
+        self.stop = False
+        self.ret1, self.frame = self.cap.read()
+        self.ret2, self.background = self.cap.read()
+        self.annotationFlag = True
+        self.startTime = datetime.now()
+        self.currentTime = datetime.now()
+        self.timestamp1 = self.startTime.strftime("%d:%m:%Y %H:%M:%S")
+        self.timestamp2 = self.startTime.strftime("%H:%M:%S")
+        self.motionFlag = "Init"
+        self.datalogf = self.timestamp1 + ".csv"
+        datalog = open(self.datalogf, "w+")
+        datalog.write("Time,Motion Detected,Sound Detected\n")
         if not self.cap.isOpened():
             raise ValueError("Unable to open video source", video_source)
-
-
 
     def get_frame(self):
         if self.cap.isOpened():
@@ -102,16 +71,73 @@ class VideoCapture:
         else:
             return False, None
 
+    def update_background(self):
+        self.ret, self.background = self.get_frame
+        
+    def update_annotation(self):
+        if self.annotationFlag == True:
+            self.annotationFlag = False
+        else: self.annotationFalg = True
+        
+    def mark_recording_csv(self,file_name):
+        with open(file_name, 'a+', newline='') as self.write_obj:
+            csv_writer = writer(self.write_obj)
+            csv_writer.writerow("\n")
+            csv_writer.writerow("recording started")
+            csv_writer.writerow("\n")
+    
+    def add_data_to_csv(self,file_name, motionFlag):
+        self.currentTime = datetime.now()
+        date = self.currentTime.strftime("%d:%m:%Y %H:%M:%S")
+        if self.motionFlag == "True":
+            self.motionStr = "YES"
+        elif self.motionFlag == "False":
+            self.motionStr = "NO"
+        else: self.motionStr = "INVALID"
+        with open(file_name, 'a+', newline='') as self.write_obj:
+            csv_writer = writer(self.write_obj)
+            csv_writer.writerow([date, self.motionStr])
+    
+    
+    def detect_motion(self, annotationFlag):
+        ret1, frame = self.ret1, self.frame
+        ret2, background = self.ret2, self.background
+        self.diff = cv2.absdiff(frame, background)
+        self.gray = cv2.cvtColor(self.diff, cv2.COLOR_BGR2GRAY)
+        self.blur = cv2.GaussianBlur(self.gray, (5,5), 0)
+        self._, self.thresh = cv2.threshold(self.blur, 10, 250, cv2.THRESH_BINARY)
+        self.dilated = cv2.dilate(self.thresh, None, iterations=2)
+        self.contours, self._ = cv2.findContours(self.dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        
+        for self.contour in self.contours:
+            (x, y, w, h) = cv2.boundingRect(self.contour)
+            
+            if annotationFlag == True and cv2.contourArea(self.contour) < 100 and cv2.contourArea(self.contour) > 25:
+                cv2.rectangle(frame, (x, y), (x+w,y+h), (0, 255, 0), 2)
+            
+            if cv2.contourArea(self.contour) < 1:
+                return frame, "True"
+            else:
+                return frame, "False"
+            
+        
     def process_frame(self):
-        ret, frame = self.get_frame()
-
-
-
-        return frame
+        with self.lock:
+            self.ret, self.frame = self.get_frame()
+            framePro, self.motionFlag = self.detect_motion(self.annotationFlag)
+            self.currentTime = datetime.now()
+            self.checkTime = self.currentTime.strftime("%d:%m:%Y %H:%M:%S")
+            if self.checkTime != self.timestamp1:
+                self.add_data_to_csv(self.datalogf, self.motionFlag)
+                #cv2.imwrite(self.timestamp1 + '.jpg', self.frame)
+                self.timestamp1 = self.checkTime
+            self.frame = self.background
+            self.ret2, self.background = self.get_frame()
+            return framePro
 
 class AudioCapture:
 
-    def __init__(self, FORMAT = pyaudio.paInt16, CHANNELS = 1, RATE = 22050, INPUT = True,
+    def __init__(self, FORMAT = pyaudio.paInt32, CHANNELS = 2, RATE = 44100, INPUT = True,
                  CHUNK = 1050, INDEX = 0):
         self.format = FORMAT
         self.channels = CHANNELS
@@ -124,29 +150,49 @@ class AudioCapture:
         self.p = pyaudio.PyAudio()
         self.stream = self.p.open(format=self.format, channels=self.channels, rate=self.rate, input=self.input,
                                   frames_per_buffer=self.chunk, input_device_index=self.index)
+        self.lock = threading.Lock()
+        self.stop = False
         self.stream.start_stream()
         if self.stream.is_active():
            print("Stream is active")
         self.frames = []
+        self.lframes = []
+        self.rframes = []
         if not self.stream.is_active():
             raise ValueError("Unable to open audio source", INDEX)
 
-    def process_audio(self):
-        hold = None
 
     def get_audio(self):
-        return self.stream.read(num_frames=self.chunk, exception_on_overflow=False)
+        with self.lock:
+            full_wave = self.stream.read(num_frames=self.chunk, exception_on_overflow=False)
+            return full_wave
+
+    def get_split_audio(self):
+        with self.lock:
+            audio = self.stream.read(num_frames=self.chunk, exception_on_overflow=False)
+            left = audio[0::2]
+            right = audio[1::2]
+            return left, right
 
     def save_audio(self):
         self.stream.stop_stream()
         self.stream.close()
         self.p.terminate()
-
-        waveFile = wave.open(self.audio_filename, 'wb')
+        left = "left" + self.audio_filename
+        waveFile = wave.open(left, 'wb')
         waveFile.setnchannels(self.channels)
         waveFile.setsampwidth(self.p.get_sample_size(self.format))
         waveFile.setframerate(self.rate)
-        waveFile.writeframes(b''.join(self.frames))
+        waveFile.writeframes(b''.join(self.lframes))
+        waveFile.close()
+
+        right = "right" + self.audio_filename
+        waveFile = wave.open(right, 'wb')
+        waveFile.setnchannels(self.channels)
+        waveFile.setsampwidth(self.p.get_sample_size(self.format))
+        waveFile.setframerate(self.rate)
+        waveFile.writeframes(b''.join(self.rframes))
+        waveFile.close()
 
 
 class Deployment:
@@ -175,9 +221,10 @@ class Deployment:
 
 
     def record_audio(self):
-        data = self.audio.get_audio()
-        self.audio.frames.append(data)
-        return data
+        left, right = self.audio.get_split_audio()
+        self.audio.lframes.append(left)
+        self.audio.rframes.append(right)
+        return left, right
 
 
 class App(QMainWindow):
@@ -187,11 +234,17 @@ class App(QMainWindow):
         self.ui.setupUi(self)
         self.timer = QTimer(self)
         self.audio_timer = QTimer(self)
+        self.wd_timer = QTimer(self)
+        self.wd_timer.setInterval(2000)
+        
         self.video_source = 0
-        # self.pwm = PCA9685()
-        self.rot_x = 0
-        self.rot_y = 0
-        # self.pwm.setPWMFreq(50)
+        #self.video_source = "vid-2021-03-01-18-41-05.avi"
+        
+        
+        self.pwm = PCA9685()
+        self.rot_x = 12
+        self.rot_y = 56
+        self.pwm.setPWMFreq(50)
         self.filter_run = []
         self.filter_list = []
         self.height = 2048
@@ -211,43 +264,72 @@ class App(QMainWindow):
         self.ui.positive.clicked.connect(self.savePositive)
         self.ui.negative.clicked.connect(self.saveNegative)
         self.start_camera()
-
+        self.wd_timer.start()
+        self.wd_timer.timeout.connect(self.stop_servo)
+        self.ui.anotation.clicked.connect(self.deployment.video.update_annotation)
 
     def get_data_update_plot(self):
         # reads audio input from microphone
-        data = self.deployment.audio.get_audio()
-        graph_data = np.frombuffer(data, dtype=np.int16)
-        self.data_line.setData(self.chunk_range, graph_data)
+        left, right = self.deployment.audio.get_split_audio()
+        left = np.frombuffer(left, dtype=np.int32)
+        right = np.frombuffer(right, dtype=np.int32)
+        self.ldata_line.setData(self.chunk_range, left)
+        self.rdata_line.setData(self.chunk_range, right)
 
     def get_frame_update_plot(self):
         # reads audio input from microphone
-        data = self.deployment.audio.frames[-1]
-        graph_data = np.frombuffer(data, dtype=np.int16)
-        self.data_line.setData(self.chunk_range, graph_data)
-
+        left = self.deployment.audio.lframes[-1]
+        right = self.deployment.audio.rframes[-1]
+        left = np.frombuffer(left, dtype=np.int32)
+        right = np.frombuffer(right, dtype=np.int32)
+        self.ldata_line.setData(self.chunk_range, left)
+        self.rdata_line.setData(self.chunk_range, right)
+        
+    def stop_servo(self):
+        self.wd_timer.stop()
+        print("wd triggered")
+        self.pwm.exit_PCA9685()
+        self.wd_timer.start()
+        
     def tilt_up(self):
+        self.wd_timer.start()
+        self.pwm.start_PCA9685()
         self.rot_y = self.rot_y - 2
         print("Y: " + str(self.rot_y))
         print("X: " + str(self.rot_x))
-        # self.pwm.setRotationAngle(0, self.rot_y)
+        self.pwm.setRotationAngle(0, self.rot_y)
+        self.deployment.video.update_background
+        #self.pwm.exit_PCA9685()
 
     def tilt_down(self):
+        self.wd_timer.start()
+        self.pwm.start_PCA9685()
         self.rot_y = self.rot_y + 2
         print("Y: " + str(self.rot_y))
         print("X: " + str(self.rot_x))
-        # self.pwm.setRotationAngle(0, self.rot_y)
+        self.pwm.setRotationAngle(0, self.rot_y)
+        self.deployment.video.update_background
+        #self.pwm.exit_PCA9685()
 
     def tilt_right(self):
+        self.wd_timer.start()
+        self.pwm.start_PCA9685()
         self.rot_x = self.rot_x - 2
         print("Y: " + str(self.rot_y))
         print("X: " + str(self.rot_x))
-        # self.pwm.setRotationAngle(1, self.rot_x)
+        self.pwm.setRotationAngle(1, self.rot_x)
+        self.deployment.video.update_background
+        #self.pwm.exit_PCA9685()
 
     def tilt_left(self):
+        self.wd_timer.start()
+        self.pwm.start_PCA9685()
         self.rot_x = self.rot_x + 2
         print("Y: " + str(self.rot_y))
         print("X: " + str(self.rot_x))
-        # self.pwm.setRotationAngle(1, self.rot_x)
+        self.pwm.setRotationAngle(1, self.rot_x)
+        self.deployment.video.update_background
+        #self.pwm.exit_PCA9685()
 
     def start_camera(self):
         print('Started Camera')
@@ -258,23 +340,24 @@ class App(QMainWindow):
                                                         focus=self.focus,
                                                         exposure=self.exposure, auto_exposure=self.auto_exposure))
         self.timer.setInterval(10)
-        self.chunk_range = np.arange(0, self.deployment.audio.chunk)
-        self.data_line = self.ui.graph.plot(self.chunk_range, )
+        self.chunk_range = np.arange(0, self.deployment.audio.chunk*2)
+
         self.timer.timeout.connect(self.update)
         self.timer.start()
         interval = 1000 * (1 / self.deployment.audio.rate)
         self.audio_timer.setInterval(interval)
-        data = self.deployment.audio.get_audio()
-        graph_data = np.frombuffer(data, dtype=np.int16)
-        self.data_line = self.ui.graph.plot(self.chunk_range, graph_data)
+        left, right = self.deployment.audio.get_split_audio()
+        lgraph_data = np.frombuffer(left, dtype=np.int32)
+        rgraph_data = np.frombuffer(right, dtype=np.int32)
+        self.ldata_line = self.ui.lgraph.plot(self.chunk_range, lgraph_data)
+        self.rdata_line = self.ui.rgraph.plot(self.chunk_range, rgraph_data)
         # self.ui.graph.clear()
         self.audio_timer.timeout.connect(self.get_data_update_plot)
         self.audio_timer.start()
 
-
-
     def start_record(self):
         print('Started Recording')
+        self.deployment.video.mark_recording_csv(self.deployment.video.datalogf)
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.deployment.out = cv2.VideoWriter('vid-%s.avi' % time.strftime("%Y-%m-%d-%H-%M-%S"), fourcc, 20.0, (640, 480))
         self.timer.timeout.connect(self.deployment.record_video)
@@ -282,9 +365,7 @@ class App(QMainWindow):
         self.audio_timer.timeout.connect(self.deployment.record_audio)
         self.audio_timer.timeout.connect(self.get_frame_update_plot)
 
-
     def stop_camera(self):
-
         self.deployment.audio.save_audio()
         try:
             self.timer.timeout.disconnect(self.deployment.record_video)
@@ -295,7 +376,6 @@ class App(QMainWindow):
         QtTest.QTest.qWait(100)
 
         print("Recording Stopped")
-
 
     def update(self):
         frame = self.deployment.video.process_frame()
@@ -311,10 +391,8 @@ class App(QMainWindow):
 
         outImage = QImage(frame, frame.shape[1], frame.shape[0], frame.strides[0], qformat)
         outImage = outImage.rgbSwapped()
-
         self.ui.Frame.setPixmap(QtGui.QPixmap.fromImage(outImage))
         self.ui.Frame.setScaledContents(True)
-
 
     def saveNegative(self):
         frame = self.deployment.video.process_frame()
